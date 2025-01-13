@@ -1,4 +1,3 @@
-// File: app.js
 const columns = ["todo", "in-progress", "done"];
 
 document.addEventListener("DOMContentLoaded", () => {
