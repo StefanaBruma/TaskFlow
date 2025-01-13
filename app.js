@@ -1,6 +1,12 @@
+// File: app.js
 const columns = ["todo", "in-progress", "done"];
 
 document.addEventListener("DOMContentLoaded", () => {
+    // Display current date
+    const currentDateEl = document.getElementById("current-date");
+    const today = new Date().toLocaleDateString();
+    currentDateEl.textContent = `Today's Date: ${today}`;
+
     // Drag and Drop functionality
     const taskLists = document.querySelectorAll(".task-list");
 
@@ -16,9 +22,29 @@ document.addEventListener("DOMContentLoaded", () => {
         const task = document.createElement("div");
         task.className = "task";
         task.draggable = true;
-        task.textContent = name;
-        task.dataset.column = column;
 
+        const taskInput = document.createElement("input");
+        taskInput.type = "text";
+        taskInput.value = name;
+        taskInput.readOnly = true;
+
+        const editButton = document.createElement("button");
+        editButton.textContent = "Edit";
+        editButton.addEventListener("click", () => {
+            if (taskInput.readOnly) {
+                taskInput.readOnly = false;
+                editButton.textContent = "Save";
+                taskInput.focus();
+            } else {
+                taskInput.readOnly = true;
+                editButton.textContent = "Edit";
+            }
+        });
+
+        task.appendChild(taskInput);
+        task.appendChild(editButton);
+
+        task.draggable = true;
         task.addEventListener("dragstart", () => {
             task.classList.add("dragging");
         });
